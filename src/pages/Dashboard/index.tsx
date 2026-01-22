@@ -1,7 +1,7 @@
 import Layout from "../../components/layouts/Layout";
 import EmailForm from "./EmailForm";
 import RecentEmails from "./RecentEmails";
-import "./Dashboard.css";
+import "./styles.css";
 
 export default function Dashboard() {
   return (

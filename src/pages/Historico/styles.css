@@ -1,0 +1,72 @@
+.historico {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.historico h1 {
+  font-size: 26px;
+}
+
+.search {
+  max-width: 300px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #cbd5f5;
+}
+
+.table-container {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background: #f8fafc;
+}
+
+tr:not(:last-child) td {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.status {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.status.success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status.pending {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+.view-btn {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+.view-btn:hover {
+  background: #1e40af;
+}
