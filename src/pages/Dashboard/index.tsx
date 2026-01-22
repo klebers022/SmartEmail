@@ -1,7 +1,7 @@
 import Layout from "../../components/layouts/Layout";
-import Card from "../../components/ui/Card";
-import Button from "../../components/ui/Button";
-import "./styles.css";
+import EmailForm from "./EmailForm";
+import RecentEmails from "./RecentEmails";
+import "./Dashboard.css";
 
 export default function Dashboard() {
   return (
@@ -9,30 +9,28 @@ export default function Dashboard() {
       <div className="dashboard">
         <h1>Dashboard</h1>
 
-        {/* Cards de métricas */}
-        <div className="cards">
-          <Card title="📨 Emails Enviados">
-            <h2>24</h2>
-          </Card>
+        {/* Cards */}
+        <div className="dashboard-cards">
+          <div className="card">
+            <h3>📨 Emails enviados</h3>
+            <strong>24</strong>
+          </div>
 
-          <Card title="⏱ Último Envio">
-            <h2>Hoje às 14:32</h2>
-          </Card>
+          <div className="card">
+            <h3>⏱ Último envio</h3>
+            <strong>Hoje - 14:32</strong>
+          </div>
 
-          <Card title="⚡ Status">
-            <h2>Ativo</h2>
-          </Card>
+          <div className="card">
+            <h3>⚡ Status</h3>
+            <strong>Ativo</strong>
+          </div>
         </div>
 
-        {/* Ação principal */}
-        <div className="action-box">
-          <h2>Gerar novo email</h2>
-          <p>
-            Gere automaticamente um email profissional utilizando inteligência
-            artificial.
-          </p>
-
-          <Button text="Gerar Email" />
+        {/* Conteúdo principal */}
+        <div className="dashboard-content">
+          <EmailForm />
+          <RecentEmails />
         </div>
       </div>
     </Layout>

@@ -5,34 +5,67 @@
 }
 
 .dashboard h1 {
-  font-size: 26px;
-  font-weight: bold;
+  font-size: 28px;
 }
 
-.cards {
+.dashboard-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
 }
 
-.cards h2 {
-  margin-top: 10px;
-  font-size: 24px;
+.card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.card strong {
+  font-size: 22px;
   color: #2563eb;
 }
 
-.action-box {
-  background: #f8fafc;
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Form */
+.email-form {
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.email-form input,
+.email-form textarea {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #cbd5f5;
+}
+
+/* Histórico */
+.recent-emails {
+  background: #fff;
   padding: 24px;
   border-radius: 12px;
   border: 1px solid #e5e7eb;
 }
 
-.action-box h2 {
-  margin-bottom: 10px;
+.recent-emails table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.action-box p {
-  margin-bottom: 16px;
-  color: #475569;
+.recent-emails th,
+.recent-emails td {
+  padding: 10px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
 }
