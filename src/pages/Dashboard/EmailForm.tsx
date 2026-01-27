@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "../../components/ui/Button";
+import { enviarEmail } from "../../services/emailService";
 
 export default function EmailForm() {
   const [email, setEmail] = useState("");
@@ -7,11 +8,12 @@ export default function EmailForm() {
   const [tipo, setTipo] = useState("");
   const [mensagem, setMensagem] = useState("");
 
-  const [errors, setErrors] = useState<any>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState("");
 
   function validarFormulario() {
-    const newErrors: any = {};
+    const newErrors: Record<string, string> = {};
 
     if (!email) {
       newErrors.email = "O email é obrigatório";
@@ -19,48 +21,54 @@ export default function EmailForm() {
       newErrors.email = "Email inválido";
     }
 
+    
+
     if (!assunto) newErrors.assunto = "O assunto é obrigatório";
     if (!tipo) newErrors.tipo = "O tipo do email é obrigatório";
     if (!mensagem) newErrors.mensagem = "A mensagem é obrigatória";
 
     setErrors(newErrors);
-
     return Object.keys(newErrors).length === 0;
   }
 
-  const handleSubmit = async () => {
+  async function handleSubmit() {
     if (!validarFormulario()) return;
 
     try {
       setLoading(true);
+      setSuccess("");
+      setErrors({});
 
-      const payload = {
+      await enviarEmail({
         email,
         assunto,
         tipo,
         mensagem,
-      };
+      });
 
-      console.log("Enviando:", payload);
+      setSuccess("✅ Email enviado com sucesso!");
 
-      alert("Email enviado com sucesso 🚀");
-
-      // Limpar formulário
+      // limpa formulário
       setEmail("");
       setAssunto("");
       setTipo("");
       setMensagem("");
-      setErrors({});
     } catch (error) {
-      alert("Erro ao enviar email");
+      console.error(error);
+      setErrors({
+        api: "Erro ao enviar email. Tente novamente.",
+      });
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   return (
     <div className="email-form">
       <h2>📧 Enviar Email</h2>
+
+      {success && <p className="success">{success}</p>}
+      {errors.api && <p className="error">{errors.api}</p>}
 
       <div>
         <input
@@ -82,7 +90,7 @@ export default function EmailForm() {
 
       <div>
         <input
-          placeholder="Tipo de email (Ex: Formal)"
+          placeholder="Tipo do email (Ex: Formal)"
           value={tipo}
           onChange={(e) => setTipo(e.target.value)}
         />
@@ -103,6 +111,7 @@ export default function EmailForm() {
       <Button
         text={loading ? "Enviando..." : "Enviar Email"}
         onClick={handleSubmit}
+        disabled={loading}
       />
     </div>
   );
