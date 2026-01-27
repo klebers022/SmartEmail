@@ -1,73 +1,115 @@
-# React + TypeScript + Vite
+# 📧 SmartMail – Sistema de Envio de Emails
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação web desenvolvida em **React + TypeScript**, integrada ao **Power Automate**, permitindo o envio de e-mails automatizados, visualização de histórico e controle de acesso.
 
-Currently, two official plugins are available:
+Projeto criado com foco em **portfólio profissional**, demonstrando integração frontend + automação + boas práticas de desenvolvimento.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Tecnologias Utilizadas
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React + Vite  
+- TypeScript  
+- React Router DOM  
+- Power Automate (HTTP Trigger)  
+- Fetch API  
+- CSS moderno  
+- Vercel (Deploy)  
+- Variáveis de ambiente (.env)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🌐 Deploy
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+🔗 **Acesse o projeto online:**  
+👉 https://smart-email-kappa.vercel.app/
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🔐 Login de Demonstração
+
+```
+Usuário: admin@email.com
+Senha: 123456
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## ⚙️ Funcionalidades
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- ✅ Login com autenticação
+- ✅ Envio e geração de e-mails com IA via Power Automate
+- ✅ Histórico de e-mails enviados
+- ✅ Dashboard com métricas
+- ✅ Proteção de rotas
+- ✅ Variáveis sensíveis protegidas
+- ✅ Interface moderna e responsiva
+- ✅ Deploy na Vercel
+
+---
+
+## ▶️ Como Executar o Projeto
+
+### 1️⃣ Clone o repositório
+```bash
+git clone https://github.com/klebers022/SmartEmail.git
+cd smartemail
 ```
+
+---
+
+### 2️⃣ Instale as dependências
+```bash
+npm install
+```
+
+---
+
+### 3️⃣ Configure o arquivo `.env`
+
+Crie um arquivo `.env` na raiz do projeto:
+
+```env
+VITE_SEND_EMAIL_URL=https://sua-url-do-power-automate
+VITE_GET_HISTORICO_URL=https://sua-url-do-historico
+```
+
+⚠️ **Nunca suba esse arquivo para o GitHub.**
+
+---
+
+### 4️⃣ Execute o projeto
+```bash
+npm run dev
+```
+
+Acesse:
+```
+http://localhost:5173
+```
+
+---
+
+## 📦 Build para Produção
+
+```bash
+npm run build
+```
+
+---
+
+## 🧠 O que este projeto demonstra
+
+- Integração real com Power Automate  
+- Organização de código frontend  
+- Boas práticas com React  
+- Uso correto de variáveis de ambiente  
+- Estrutura profissional de projeto  
+- Autenticação básica  
+- Projeto pronto para portfólio  
+
+---
+
+## 👨‍💻 Autor
+
+**Kleber da Silva**  
