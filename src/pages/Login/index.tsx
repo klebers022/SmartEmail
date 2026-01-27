@@ -12,12 +12,20 @@ export default function Login() {
   const [error, setError] = useState("");
 
   function handleLogin() {
+    setError("");
+
     if (!email || !senha) {
       setError("Preencha todos os campos");
       return;
     }
 
-    login(email, senha);
+    const success = login(email, senha);
+
+    if (!success) {
+      setError("Usuário ou senha inválidos");
+      return;
+    }
+
     navigate("/dashboard");
   }
 

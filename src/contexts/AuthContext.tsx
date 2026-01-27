@@ -10,20 +10,22 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(
-    !!localStorage.getItem("token")
+    !!localStorage.getItem("auth")
   );
 
   function login(email: string, senha: string) {
-    if (email === "admin@admin.com" && senha === "123456") {
-      localStorage.setItem("token", "auth-token");
+    // login simples (depois pode integrar com API)
+    if (email === "admin@email.com" && senha === "123456") {
+      localStorage.setItem("auth", "true");
       setIsAuthenticated(true);
       return true;
     }
+
     return false;
   }
 
   function logout() {
-    localStorage.removeItem("token");
+    localStorage.removeItem("auth");
     setIsAuthenticated(false);
   }
 
@@ -34,4 +36,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export const useAuth = () => useContext(AuthContext);
+export function useAuth() {
+  return useContext(AuthContext);
+}
