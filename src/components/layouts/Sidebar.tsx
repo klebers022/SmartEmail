@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { FiHome, FiMail, FiClock } from "react-icons/fi";
+import { FiHome, FiClock } from "react-icons/fi";
 import "./Sidebar.css";
 
 export default function Sidebar() {
@@ -30,15 +30,7 @@ export default function Sidebar() {
           Histórico
         </Link>
 
-        <Link
-          to="/"
-          className={`menu-item ${
-            location.pathname === "/" ? "active" : ""
-          }`}
-        >
-          <FiMail />
-          Enviar Email
-        </Link>
+   
       </nav>
     </aside>
   );

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Layout from "../../components/layouts/Layout";
 import EmailForm from "./EmailForm";
-import RecentEmails from "./RecentEmails";
 import { getHistoricoEmails } from "../../services/emailService";
 import "./styles.css";
 
@@ -10,7 +9,7 @@ type Email = {
   Email: string;
   Assunto: string;
   Status: string;
-  Data: string;
+  "Data ": string; // ⚠️ campo vem com espaço do Power Automate
 };
 
 export default function Dashboard() {
@@ -34,10 +33,17 @@ export default function Dashboard() {
 
   const totalEmails = emails.length;
 
-  const ultimoEnvio =
-    emails.length > 0
-      ? emails[0].Data
-      : "Nenhum envio";
+  // Agrupar emails por data (com proteção)
+  const emailsPorDia = emails.reduce((acc: Record<string, number>, item) => {
+    const dataCompleta = item["Data "];
+
+    if (!dataCompleta) return acc;
+
+    const data = dataCompleta.split(" ")[0]; // dd/MM/yyyy
+    acc[data] = (acc[data] || 0) + 1;
+
+    return acc;
+  }, {});
 
   return (
     <Layout>
@@ -48,25 +54,34 @@ export default function Dashboard() {
         <div className="dashboard-cards">
           <div className="card">
             <h3>📨 Emails enviados</h3>
-            <strong>{totalEmails}</strong>
-          </div>
-
-          <div className="card">
-            <h3>⏱ Último envio</h3>
-            <strong>{ultimoEnvio}</strong>
-          </div>
-
-          <div className="card">
-            <h3>⚡ Status</h3>
-            <strong>{loading ? "Carregando..." : "Ativo"}</strong>
+            <strong>{loading ? "..." : totalEmails}</strong>
           </div>
         </div>
 
-        {/* CONTEÚDO */}
-        <div className="dashboard-content">
-          <EmailForm />
-          <RecentEmails emails={emails.slice(0, 5)} />
+        {/* GRÁFICO */}
+        <div className="chart-box">
+          <h3>📊 Emails enviados por dia</h3>
+
+          {loading ? (
+            <p>Carregando dados...</p>
+          ) : (
+            <ul className="chart-list">
+              {Object.keys(emailsPorDia).length === 0 && (
+                <li>Nenhum email encontrado</li>
+              )}
+
+              {Object.entries(emailsPorDia).map(([data, total]) => (
+                <li key={data}>
+                  <span>{data}</span>
+                  <strong>{total}</strong>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
+
+        {/* FORMULÁRIO */}
+        <EmailForm />
       </div>
     </Layout>
   );
