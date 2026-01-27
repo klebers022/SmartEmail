@@ -1,46 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../../components/layouts/Layout";
+import { getHistoricoEmails } from "../../services/emailService";
 import "./styles.css";
 
 type Email = {
-  id: number;
-  to: string;
-  subject: string;
-  status: string;
-  date: string;
+  "Nome ": string;
+  "Email ": string;
+  "Assunto ": string;
+  "Mensagem": string;
+  "Data ": string;
+  "Status": string;
 };
 
 export default function Historico() {
   const [search, setSearch] = useState("");
+  const [emails, setEmails] = useState<Email[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const emails: Email[] = [
-    {
-      id: 1,
-      to: "cliente@email.com",
-      subject: "Proposta Comercial",
-      status: "Enviado",
-      date: "23/01/2026",
-    },
-    {
-      id: 2,
-      to: "rh@empresa.com",
-      subject: "Follow-up Entrevista",
-      status: "Enviado",
-      date: "22/01/2026",
-    },
-    {
-      id: 3,
-      to: "contato@empresa.com",
-      subject: "Apresentação de Serviços",
-      status: "Pendente",
-      date: "21/01/2026",
-    },
-  ];
+  useEffect(() => {
+    async function carregarHistorico() {
+      try {
+        const data = await getHistoricoEmails();
+        setEmails(data);
+      } catch (err) {
+        console.error(err);
+        setError("Erro ao carregar histórico de emails");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    carregarHistorico();
+  }, []);
 
   const filteredEmails = emails.filter(
     (email) =>
-      email.to.toLowerCase().includes(search.toLowerCase()) ||
-      email.subject.toLowerCase().includes(search.toLowerCase())
+      email["Email "].toLowerCase().includes(search.toLowerCase()) ||
+      email["Assunto "].toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -56,43 +53,60 @@ export default function Historico() {
           onChange={(e) => setSearch(e.target.value)}
         />
 
+        {/* Loading */}
+        {loading && <p>Carregando histórico...</p>}
+
+        {/* Erro */}
+        {error && <p className="error">{error}</p>}
+
         {/* Tabela */}
-        <div className="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Destinatário</th>
-                <th>Assunto</th>
-                <th>Status</th>
-                <th>Data</th>
-                <th>Ação</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredEmails.map((email) => (
-                <tr key={email.id}>
-                  <td>{email.to}</td>
-                  <td>{email.subject}</td>
-                  <td>
-                    <span
-                      className={`status ${
-                        email.status === "Enviado"
-                          ? "success"
-                          : "pending"
-                      }`}
-                    >
-                      {email.status}
-                    </span>
-                  </td>
-                  <td>{email.date}</td>
-                  <td>
-                    <button className="view-btn">Ver</button>
-                  </td>
+        {!loading && !error && (
+          <div className="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Destinatário</th>
+                  <th>Assunto</th>
+                  <th>Status</th>
+                  <th>Data</th>
+                  <th>Ação</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {filteredEmails.map((email, index) => (
+                  <tr key={index}>
+                    <td>{email["Email "]}</td>
+                    <td>{email["Assunto "]}</td>
+                    <td>
+                      <span
+                        className={`status ${
+                          email.Status === "Enviado"
+                            ? "success"
+                            : "pending"
+                        }`}
+                      >
+                        {email.Status || "Pendente"}
+                      </span>
+                    </td>
+                    <td>{email["Data "]}</td>
+                    <td>
+                      <button
+                        className="view-btn"
+                        onClick={() => alert(email.Mensagem)}
+                      >
+                        Ver
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {filteredEmails.length === 0 && (
+              <p className="empty">Nenhum email encontrado.</p>
+            )}
+          </div>
+        )}
       </div>
     </Layout>
   );
