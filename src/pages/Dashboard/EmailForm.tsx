@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../../components/ui/Button";
 import { enviarEmail } from "../../services/emailService";
+import "./styles.css";
 
 export default function EmailForm() {
   const [email, setEmail] = useState("");
@@ -15,13 +16,8 @@ export default function EmailForm() {
   function validarFormulario() {
     const newErrors: Record<string, string> = {};
 
-    if (!email) {
-      newErrors.email = "O email é obrigatório";
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = "Email inválido";
-    }
-
-    
+    if (!email) newErrors.email = "O email é obrigatório";
+    else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = "Email inválido";
 
     if (!assunto) newErrors.assunto = "O assunto é obrigatório";
     if (!tipo) newErrors.tipo = "O tipo do email é obrigatório";
@@ -39,25 +35,15 @@ export default function EmailForm() {
       setSuccess("");
       setErrors({});
 
-      await enviarEmail({
-        email,
-        assunto,
-        tipo,
-        mensagem,
-      });
+      await enviarEmail({ email, assunto, tipo, mensagem });
 
       setSuccess("✅ Email enviado com sucesso!");
-
-      // limpa formulário
       setEmail("");
       setAssunto("");
       setTipo("");
       setMensagem("");
-    } catch (error) {
-      console.error(error);
-      setErrors({
-        api: "Erro ao enviar email. Tente novamente.",
-      });
+    } catch {
+      setErrors({ api: "Erro ao enviar email. Tente novamente." });
     } finally {
       setLoading(false);
     }
@@ -70,7 +56,7 @@ export default function EmailForm() {
       {success && <p className="success">{success}</p>}
       {errors.api && <p className="error">{errors.api}</p>}
 
-      <div>
+      <div className="form-group">
         <input
           placeholder="Email do destinatário"
           value={email}
@@ -79,7 +65,7 @@ export default function EmailForm() {
         {errors.email && <span className="error">{errors.email}</span>}
       </div>
 
-      <div>
+      <div className="form-group">
         <input
           placeholder="Assunto"
           value={assunto}
@@ -88,7 +74,7 @@ export default function EmailForm() {
         {errors.assunto && <span className="error">{errors.assunto}</span>}
       </div>
 
-      <div>
+      <div className="form-group">
         <input
           placeholder="Tipo do email (Ex: Formal)"
           value={tipo}
@@ -97,15 +83,13 @@ export default function EmailForm() {
         {errors.tipo && <span className="error">{errors.tipo}</span>}
       </div>
 
-      <div>
+      <div className="form-group">
         <textarea
           placeholder="Digite a mensagem..."
           value={mensagem}
           onChange={(e) => setMensagem(e.target.value)}
         />
-        {errors.mensagem && (
-          <span className="error">{errors.mensagem}</span>
-        )}
+        {errors.mensagem && <span className="error">{errors.mensagem}</span>}
       </div>
 
       <Button

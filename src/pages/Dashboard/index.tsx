@@ -9,7 +9,7 @@ type Email = {
   Email: string;
   Assunto: string;
   Status: string;
-  "Data ": string; // ⚠️ campo vem com espaço do Power Automate
+  "Data ": string;
 };
 
 export default function Dashboard() {
@@ -33,47 +33,53 @@ export default function Dashboard() {
 
   const totalEmails = emails.length;
 
-  // Agrupar emails por data (com proteção)
   const emailsPorDia = emails.reduce((acc: Record<string, number>, item) => {
     const dataCompleta = item["Data "];
-
     if (!dataCompleta) return acc;
 
-    const data = dataCompleta.split(" ")[0]; // dd/MM/yyyy
+    const data = dataCompleta.split(" ")[0];
     acc[data] = (acc[data] || 0) + 1;
-
     return acc;
   }, {});
 
   return (
     <Layout>
       <div className="dashboard">
-        <h1>Dashboard</h1>
+        <div className="dashboard-header">
+          <h1>📊 Dashboard</h1>
+          <p>Visão geral dos envios de email</p>
+        </div>
 
         {/* CARDS */}
         <div className="dashboard-cards">
-          <div className="card">
-            <h3>📨 Emails enviados</h3>
+          <div className="card highlight">
+            <span>Total de emails</span>
             <strong>{loading ? "..." : totalEmails}</strong>
           </div>
         </div>
 
         {/* GRÁFICO */}
         <div className="chart-box">
-          <h3>📊 Emails enviados por dia</h3>
+          <h3>Emails enviados por dia</h3>
 
           {loading ? (
-            <p>Carregando dados...</p>
+            <p className="muted">Carregando dados...</p>
           ) : (
             <ul className="chart-list">
               {Object.keys(emailsPorDia).length === 0 && (
-                <li>Nenhum email encontrado</li>
+                <li>Nenhum envio encontrado</li>
               )}
 
               {Object.entries(emailsPorDia).map(([data, total]) => (
                 <li key={data}>
                   <span>{data}</span>
-                  <strong>{total}</strong>
+                  <div className="bar">
+                    <div
+                      className="fill"
+                      style={{ width: `${total * 15}px` }}
+                    />
+                    <strong>{total}</strong>
+                  </div>
                 </li>
               ))}
             </ul>

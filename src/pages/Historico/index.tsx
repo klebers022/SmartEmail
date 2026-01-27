@@ -7,9 +7,9 @@ type Email = {
   "Nome ": string;
   "Email ": string;
   "Assunto ": string;
-  "Mensagem": string;
+  Mensagem: string;
   "Data ": string;
-  "Status": string;
+  Status: string;
 };
 
 export default function Historico() {
@@ -37,7 +37,7 @@ export default function Historico() {
   const filteredEmails = emails.filter(
     (email) =>
       email["Email "].toLowerCase().includes(search.toLowerCase()) ||
-      email["Assunto "].toLowerCase().includes(search.toLowerCase())
+      email["Assunto "].toLowerCase().includes(search.toLowerCase()),
   );
 
   return (
@@ -80,9 +80,7 @@ export default function Historico() {
                     <td>
                       <span
                         className={`status ${
-                          email.Status === "Enviado"
-                            ? "success"
-                            : "pending"
+                          email.Status === "Enviado" ? "success" : "pending"
                         }`}
                       >
                         {email.Status || "Pendente"}
